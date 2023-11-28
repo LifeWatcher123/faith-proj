@@ -133,7 +133,7 @@ let currentContentIndex = 0;
 let progressValue = 0;
 let group1Clicked = false;
 let group2Clicked = false;
-let userChoicesPerQuestion = [];
+let userChoices = [];
 
 const progressBar = document.querySelector('.progress-bar');
 
@@ -191,7 +191,7 @@ function resetButtonColors() {
 
 
 function updateButtonColors() {
-  if (userChoicesPerQuestion[currentContentIndex] && userChoicesPerQuestion[currentContentIndex].group1 === 'like') {
+  if (userChoices[currentContentIndex] && userChoices[currentContentIndex].group1 === 'like') {
     group1Clicked = true;
     document.getElementById('group1').classList.remove('btn-secondary');
     document.getElementById('group1').classList.add('btn-primary');
@@ -201,7 +201,7 @@ function updateButtonColors() {
     document.getElementById('group1').classList.add('btn-secondary');
   }
 
-  if (userChoicesPerQuestion[currentContentIndex] && userChoicesPerQuestion[currentContentIndex].group2 === 'love') {
+  if (userChoices[currentContentIndex] && userChoices[currentContentIndex].group2 === 'love') {
     group2Clicked = true;
     document.getElementById('group2').classList.remove('btn-secondary');
     document.getElementById('group2').classList.add('btn-primary');
@@ -248,7 +248,7 @@ document.getElementById('nextButton').addEventListener('click', function() {
 
   if ((isGroup1Answered && isGroup2Answered) || currentContentIndex === 0) {
     // Store the user's choices for the current question set
-    userChoicesPerQuestion[currentContentIndex] = {
+    userChoices[currentContentIndex] = {
       group1: group1Clicked ? 'like' : null,
       group2: group2Clicked ? 'love' : null,
     };
@@ -265,7 +265,7 @@ document.getElementById('nextButton').addEventListener('click', function() {
 });
 
 function resetUserChoices() {
-  userChoicesPerQuestion = [];
+  userChoices = [];
 }
 
 document.getElementById('prevButton').addEventListener('click', function() {
@@ -293,8 +293,8 @@ window.onload = () => {
     // Check conditions for navigating to the next question
     if (
       (currentContentIndex === 1 &&
-        userChoicesPerQuestion[currentContentIndex].group1 !== '' &&
-        userChoicesPerQuestion[currentContentIndex].group2 !== '') ||
+        userChoices[currentContentIndex].group1 !== '' &&
+        userChoices[currentContentIndex].group2 !== '') ||
       currentContentIndex === 0
     ) {
       if (currentContentIndex < columnContent.length - 1) {
