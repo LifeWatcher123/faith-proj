@@ -138,6 +138,23 @@ let userChoicesPerQuestion = [];
 const progressBar = document.querySelector('.progress-bar');
 
 // ... (Your existing code remains the same)
+function updateContent(index) {
+  // Modified the updateContent function to display all questions
+  const questionElement1 = document.getElementById('questions1');
+  const questionElement2 = document.getElementById('questions2');
+  const imageElement1 = document.getElementById('testimages1');
+  const imageElement2 = document.getElementById('testimages2');
+
+  // Use the index to get the corresponding question set
+  const currentQuestionSet = columnContent[index];
+
+  questionElement1.innerHTML = currentQuestionSet.question1;
+  questionElement2.innerHTML = currentQuestionSet.question2;
+  imageElement1.src = currentQuestionSet.imageSrc1;
+  imageElement2.src = currentQuestionSet.imageSrc2;
+
+  userChoices = [];
+}
 
 function updateRadioButtons(index) {
   const radioGroup1 = document.getElementById('group1');
