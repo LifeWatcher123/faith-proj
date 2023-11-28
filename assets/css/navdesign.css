@@ -1,0 +1,35 @@
+.nav-con {
+  position: absolute;
+  width: 100%;
+  padding-bottom: 100%;
+  vertical-align: middle;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  display: inline-block;
+}
+
+.curved-background {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+@media (max-width: 500vh) {
+  .svg-container {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: auto;
+    left: 0;
+    z-index: -1;
+    top: 0;
+  }
+}
+
+.custom-fill {
+  position: absolute;
+  width: 100%;
+  height: auto;
+}
+

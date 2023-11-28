@@ -1,0 +1,68 @@
+.btn-head {
+  display: flex;
+  justify-content: flex-end;
+  align-content: end;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-body {
+  flex: 1;
+}
+
+.img-div {
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  flex: 1;
+}
+
+.foot-guide1 {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  z-index: 1000;
+}
+
+.img-guide1 {
+  height: 100%;
+  /*justify-content: center;*/
+  margin-left: 20%;
+}
+
+.div-guide1 {
+}
+
+.col-md-6 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.div-guide1 {
+  margin-top: 10px;
+}
+
+.div-guide1 img {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  padding: 10px;
+  height: 40vh;
+}
+

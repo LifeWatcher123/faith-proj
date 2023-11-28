@@ -1,0 +1,59 @@
+.header {
+  width: 100%;
+}
+
+@media (min-width: 576px) and (max-width: 1400px) {
+  .header-container {
+    background: url(dlsl.jpg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    padding: 50px 0 250px 0;
+    height: auto;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 1400px) {
+  .text-center {
+    margin-top: 80px;
+    font-weight: bold;
+    margin-left: -40px;
+  }
+}
+
+/* Default styles for all screen sizes */
+
+h1 {
+  color: var(--bs-black);
+  font-family: 'Archivo Black', sans-serif;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 6px;
+  margin-top: 72px;
+}
+
+/* Media query for screens smaller than 576px (e.g., mobile devices) */
+
+@media (max-width: 575.98px) {
+  h1 {
+    font-size: 18px;
+    margin-top: 48px;
+  }
+}
+
+/* Media query for screens between 576px and 767.98px (e.g., tablets) */
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  h1 {
+    font-size: 24px;
+  }
+}
+
+/* Media query for screens larger than 991.98px (e.g., desktops) */
+
+@media (min-width: 992px) {
+  h1 {
+    font-size: 80px;
+  }
+}
+
