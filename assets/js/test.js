@@ -137,7 +137,6 @@ let userChoices = [];
 
 const progressBar = document.querySelector('.progress-bar');
 
-// ... (Your existing code remains the same)
 function updateContent(index) {
   // Modified the updateContent function to display all questions
   const questionElement1 = document.getElementById('questions1');
@@ -157,21 +156,21 @@ function updateContent(index) {
 }
 
 function updateRadioButtons(index) {
-  const radioGroup1 = document.getElementById('group1');
-  const radioGroup2 = document.getElementById('group2');
+const radioGroup1 = document.getElementById('group1');
+const radioGroup2 = document.getElementById('group2');
 
-  // Hide all radio button groups by default
-  radioGroup1.style.display = 'none';
-  radioGroup2.style.display = 'none';
+// Hide all radio button groups by default
+radioGroup1.style.display = 'none';
+radioGroup2.style.display = 'none';
 
-  // Show radio button groups based on the current question index
-  if (index < columnContent.length) {
-    if (index % 2 === 0) {
-      radioGroup1.style.display = 'flex';
-    } else {
-      radioGroup2.style.display = 'flex';
-    }
+// Show radio button groups based on the current question index
+if (index < columnContent.length) {
+  if (index % 2 === 0) {
+    radioGroup1.style.display = 'flex';
+  } else {
+    radioGroup2.style.display = 'flex';
   }
+}
 }
 
 function updateProgressBar() {
@@ -189,28 +188,27 @@ function resetButtonColors() {
   document.getElementById('group2').classList.add('btn-secondary');
 }
 
-
 function updateButtonColors() {
-  if (userChoices[currentContentIndex] && userChoices[currentContentIndex].group1 === 'like') {
-    group1Clicked = true;
+  const group1Clicked = userChoicesPerQuestion[currentContentIndex]?.group1 !== undefined;
+  const group2Clicked = userChoicesPerQuestion[currentContentIndex]?.group2 !== undefined;
+
+  if (group1Clicked) {
     document.getElementById('group1').classList.remove('btn-secondary');
     document.getElementById('group1').classList.add('btn-primary');
   } else {
-    group1Clicked = false;
     document.getElementById('group1').classList.remove('btn-primary');
     document.getElementById('group1').classList.add('btn-secondary');
   }
 
-  if (userChoices[currentContentIndex] && userChoices[currentContentIndex].group2 === 'love') {
-    group2Clicked = true;
+  if (group2Clicked) {
     document.getElementById('group2').classList.remove('btn-secondary');
     document.getElementById('group2').classList.add('btn-primary');
   } else {
-    group2Clicked = false;
     document.getElementById('group2').classList.remove('btn-primary');
     document.getElementById('group2').classList.add('btn-secondary');
   }
 }
+
 
 document.getElementById('group1').addEventListener('click', function() {
   if (!group1Clicked && progressValue < 100) {
@@ -243,24 +241,21 @@ document.getElementById('group2').addEventListener('click', function() {
 });
 
 document.getElementById('nextButton').addEventListener('click', function() {
-  const isGroup1Answered = group1Clicked;
-  const isGroup2Answered = group2Clicked;
 
-  if ((isGroup1Answered && isGroup2Answered) || currentContentIndex === 0) {
-    // Store the user's choices for the current question set
-    userChoices[currentContentIndex] = {
-      group1: group1Clicked ? 'like' : null,
-      group2: group2Clicked ? 'love' : null,
-    };
-
+  if (userChoices.length === 2) {
     if (currentContentIndex < columnContent.length - 1) {
       currentContentIndex++;
       updateContent(currentContentIndex);
       resetButtonColors();
       updateButtonColors();
+    } else {
+      // Display a message or perform an action when all questions are answered
+      alert('You have completed all questions!');
+      // You might want to perform some action here when all questions are answered
     }
   } else {
-    alert('Please answer all questions in this group before proceeding.');
+    // Display a message to the user to select an option before proceeding
+    alert('Please select an option for both questions before proceeding.');
   }
 });
 
@@ -280,41 +275,13 @@ document.getElementById('prevButton').addEventListener('click', function() {
 window.onload = () => {
   // Clear previously stored progress value
   localStorage.removeItem('progress');
-  restoreUserChoices();
-  // Set progress to 0
+
   progressValue = 0;
   localStorage.setItem('progress', progressValue);
 
   // Initialize buttons and their functionalities
   const nextButton = document.getElementById('nextButton');
   const prevButton = document.getElementById('prevButton');
-
-  nextButton.addEventListener('click', function() {
-    // Check conditions for navigating to the next question
-    if (
-      (currentContentIndex === 1 &&
-        userChoices[currentContentIndex].group1 !== '' &&
-        userChoices[currentContentIndex].group2 !== '') ||
-      currentContentIndex === 0
-    ) {
-      if (currentContentIndex < columnContent.length - 1) {
-        currentContentIndex++;
-        updateContent(currentContentIndex);
-        resetAndLoadButtons();
-      }
-    } else {
-      alert('Please answer all questions in this group before proceeding.');
-    }
-  });
-
-  prevButton.addEventListener('click', function() {
-    // Go to the previous question if available
-    if (currentContentIndex > 0) {
-      currentContentIndex--;
-      updateContent(currentContentIndex);
-      resetAndLoadButtons();
-    }
-  });
 
   // Retrieve stored progress data on page load
   const storedProgress = parseInt(localStorage.getItem('progress'));
