@@ -158,6 +158,57 @@ let userChoices = [];
 
 const progressBar = document.querySelector('.progress-bar');
 
+const myCarouselElement = document.querySelector('#questionsCarousel');
+
+const carousel = new bootstrap.Carousel(myCarouselElement, {
+  touch: false,
+  wrap: false
+});
+
+const carouselInner = document.querySelector('#questionsCarouselContent');
+
+var carouselItems = [];
+for (let i = 0; i < separatedContent.length; i += 2) {
+  let questionToAppend = `
+  <div class="carousel-item ${i === 0 ? 'active' : ''}">
+    <div class="row rowtest">
+      <div class="col-md-6 col-xxl-6 offset-xxl-0 column"
+        style="padding: 10px;height: 470px;width: 660px;display: flex;flex-direction: column;align-items: center;justify-content: center;">
+        <h4 id="questions1" class="text-center" style="font-family: 'Noto Sans', sans-serif;font-size: 18px;">
+          ${separatedContent[i].question}</h4>
+        <img class="img-fluid image" src="${separatedContent[i].imageSrc}" style="width: 300px;height: 300px;" />
+        <div id="group${i}" class="d-flex justify-content-center btn-group" role="group">
+          <label id="loveLabel${i}" class="form-label form-label form-label btnlabel" for="loveRadio${i}">
+            <input id="loveRadio${i}" class="btn-check" type="radio" autocomplete="off" name="btnradio" />
+            <img src="assets/img/icons/LOVE.png" width="120" height="112">I love it!</img>
+          </label>
+          <label id="dislikeLabel${i}" class="form-label form-label form-label btnlabel" for="dislikeRadio${i}">
+            <input id="dislikeRadio${i}" class="btn-check" type="radio" autocomplete="off" name="btnradio" />
+            <img src="assets/img/icons/DISLIKE.png" width="120" height="109" /> Dislike </label>
+        </div>
+      </div>
+      <div class="col-md-6 column" style="padding: 10px;height: 470px;width: 660px;">
+        <h4 id="questions2" class="text-center" style="font-family: 'Noto Sans', sans-serif;font-size: 18px;">
+          ${separatedContent[i + 1].question}</h4>
+        <img class="img-fluid image" src="${separatedContent[i + 1].imageSrc}" style="height: 300px;width: 300px;" />
+        <div id="group${i + 1}" class="d-flex justify-content-center btn-group" role="group">
+          <label id="loveLabel${i + 1}" class="form-label form-label form-label btnlabel" for="loveRadio${i + 1}">
+            <input id="loveRadio${i + 1}" class="btn-check" type="radio" autocomplete="off" name="btnradio" />
+            <img src="assets/img/icons/LOVE.png" width="120" height="112">I love it!</img>
+          </label>
+          <label id="dislikeLabel${i + 1}" class="form-label form-label form-label btnlabel" for="dislikeRadio${i + 1}">
+            <input id="dislikeRadio${i + 1}" class="btn-check" type="radio" autocomplete="off" name="btnradio" />
+            <img src="assets/img/icons/DISLIKE.png" width="120" height="109" /> Dislike </label>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+  carouselItems.push(questionToAppend);
+}
+
+carouselInner.insertAdjacentHTML('afterbegin', carouselItems.join('\n'));
+
 function updateContent(index) {
   // Modified the updateContent function to display all questions
   const questionElement1 = document.getElementById('questions1');
@@ -262,21 +313,11 @@ document.getElementById('group2').addEventListener('click', function() {
 });
 
 document.getElementById('nextButton').addEventListener('click', function() {
-
-  if (userChoices.length === 2) {
-    if (currentContentIndex < columnContent.length - 1) {
-      currentContentIndex++;
-      updateContent(currentContentIndex);
-      resetButtonColors();
-      updateButtonColors();
-    } else {
-      // Display a message or perform an action when all questions are answered
-      alert('You have completed all questions!');
-      // You might want to perform some action here when all questions are answered
-    }
+  if (currentContentIndex < columnContent.length - 1) {
+    currentContentIndex++;
+    carousel.next();
   } else {
-    // Display a message to the user to select an option before proceeding
-    alert('Please select an option for both questions before proceeding.');
+    alert('You have completed all questions!');
   }
 });
 
@@ -286,10 +327,7 @@ function resetUserChoices() {
 
 document.getElementById('prevButton').addEventListener('click', function() {
   if (currentContentIndex > 0) {
-    currentContentIndex--;
-    updateContent(currentContentIndex);
-    resetButtonColors();
-    updateButtonColors();
+    carousel.prev();
   }
 });
 
