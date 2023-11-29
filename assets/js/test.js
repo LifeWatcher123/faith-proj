@@ -180,11 +180,11 @@ for (let i = 0; i < separatedContent.length; i += 2) {
         <div id="group${i}" class="d-flex justify-content-center btn-group" role="group">
           <label id="loveLabel${i}" class="form-label form-label form-label btnlabel" for="loveRadio${i}">
             <input id="loveRadio${i}" class="btn-check" type="radio" autocomplete="off" name="btnradio" />
-            <img src="assets/img/icons/LOVE.png" width="120" height="112">I love it!</img>
+            <img id="loveImg${i}" src="assets/img/icons/LOVE.png" width="120" height="112">I love it!</img>
           </label>
           <label id="dislikeLabel${i}" class="form-label form-label form-label btnlabel" for="dislikeRadio${i}">
             <input id="dislikeRadio${i}" class="btn-check" type="radio" autocomplete="off" name="btnradio" />
-            <img src="assets/img/icons/DISLIKE.png" width="120" height="109" /> Dislike </label>
+            <img id="dislikeImg${i}" src="assets/img/icons/DISLIKE.png" width="120" height="109" /> Dislike </label>
         </div>
       </div>
       <div class="col-md-6 column" style="padding: 10px;height: 470px;width: 660px;">
@@ -194,11 +194,11 @@ for (let i = 0; i < separatedContent.length; i += 2) {
         <div id="group${i + 1}" class="d-flex justify-content-center btn-group" role="group">
           <label id="loveLabel${i + 1}" class="form-label form-label form-label btnlabel" for="loveRadio${i + 1}">
             <input id="loveRadio${i + 1}" class="btn-check" type="radio" autocomplete="off" name="btnradio" />
-            <img src="assets/img/icons/LOVE.png" width="120" height="112">I love it!</img>
+            <img id="loveImg${i + 1}" src="assets/img/icons/LOVE.png" width="120" height="112">I love it!</img>
           </label>
           <label id="dislikeLabel${i + 1}" class="form-label form-label form-label btnlabel" for="dislikeRadio${i + 1}">
             <input id="dislikeRadio${i + 1}" class="btn-check" type="radio" autocomplete="off" name="btnradio" />
-            <img src="assets/img/icons/DISLIKE.png" width="120" height="109" /> Dislike </label>
+            <img id="dislikeImg${i + 1}" src="assets/img/icons/DISLIKE.png" width="120" height="109" /> Dislike </label>
         </div>
       </div>
     </div>
@@ -239,6 +239,18 @@ elements.forEach(function(element) {
         case "dislikeLabel":
           result = "dislike";
           break;
+      }
+
+      if (result === "love") {
+        var imgToBlur = document.getElementById("dislikeImg" + number)
+        imgToBlur.style.filter = 'grayscale(100%)';
+        var imgToUnblur = document.getElementById("loveImg" + number)
+        imgToUnblur.style.filter = 'grayscale(0%)';
+      } else if (result === "dislike") {
+        var imgToBlur = document.getElementById("loveImg" + number)
+        imgToBlur.style.filter = 'grayscale(100%)';
+        var imgToUnblur = document.getElementById("dislikeImg" + number)
+        imgToUnblur.style.filter = 'grayscale(0%)';
       }
 
       userChoices[number] = result;
@@ -320,6 +332,11 @@ function updateButtonColors() {
 }
 
 document.getElementById('nextButton').addEventListener('click', function() {
+  let to_userChoicesIndex = currentContentIndex * 2;
+  if (!(userChoices[to_userChoicesIndex] && userChoices[to_userChoicesIndex + 1])) {
+    alert('Please select an option for both questions before proceeding.');
+    return;
+  }
   if (currentContentIndex < columnContent.length - 1) {
     currentContentIndex++;
     carousel.next();
@@ -334,6 +351,7 @@ function resetUserChoices() {
 
 document.getElementById('prevButton').addEventListener('click', function() {
   if (currentContentIndex > 0) {
+    currentContentIndex--;
     carousel.prev();
   }
 });
