@@ -228,21 +228,21 @@ function updateContent(index) {
 }
 
 function updateRadioButtons(index) {
-const radioGroup1 = document.getElementById('group1');
-const radioGroup2 = document.getElementById('group2');
+  const radioGroup1 = document.getElementById('group1');
+  const radioGroup2 = document.getElementById('group2');
 
-// Hide all radio button groups by default
-radioGroup1.style.display = 'none';
-radioGroup2.style.display = 'none';
+  // Hide all radio button groups by default
+  radioGroup1.style.display = 'none';
+  radioGroup2.style.display = 'none';
 
-// Show radio button groups based on the current question index
-if (index < columnContent.length) {
-  if (index % 2 === 0) {
-    radioGroup1.style.display = 'flex';
-  } else {
-    radioGroup2.style.display = 'flex';
+  // Show radio button groups based on the current question index
+  if (index < columnContent.length) {
+    if (index % 2 === 0) {
+      radioGroup1.style.display = 'flex';
+    } else {
+      radioGroup2.style.display = 'flex';
+    }
   }
-}
 }
 
 function updateProgressBar() {
