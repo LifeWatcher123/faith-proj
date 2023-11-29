@@ -126,8 +126,29 @@ const columnContent = [
     imageSrc1: "assets/img/test/nx42.png",
     imageSrc2: "assets/img/test/nx43.png"
   },
-
 ];
+
+const separatedContent = columnContent.reduce((result, current) => {
+  const pair1 = {
+    question: current.question1,
+    imageSrc: current.imageSrc1
+  };
+  const pair2 = {
+    question: current.question2,
+    imageSrc: current.imageSrc2
+  };
+
+  result.push(pair1, pair2);
+  return result;
+}, []);
+
+const separatedContent2 = columnContent.flatMap(item => [
+  { question: item.question1, imageSrc: item.imageSrc1 },
+  { question: item.question2, imageSrc: item.imageSrc2 }
+]);
+
+console.log(separatedContent);
+console.log(separatedContent2);
 
 let currentContentIndex = 0;
 let progressValue = 0;
