@@ -209,6 +209,44 @@ for (let i = 0; i < separatedContent.length; i += 2) {
 
 carouselInner.insertAdjacentHTML('afterbegin', carouselItems.join('\n'));
 
+var elements = document.querySelectorAll('[id^="loveLabel"], [id^="dislikeLabel"]');
+
+elements.forEach(function(element) {
+  element.addEventListener('click', function(event) {
+    // Get the ID and extract the type ("love" or "dislike") and number
+    var id = element.id;
+    var match = id.match(/([a-zA-Z]+)(\d+)/);
+
+    if (match) {
+      var type = match[1];
+      var number = match[2];
+
+      var result = ""
+
+      if (!userChoices[number])
+        if (!group1Clicked && progressValue < 100) {
+          progressValue += 2;
+          if (progressValue > 100) {
+            progressValue = 100;
+          }
+          updateProgressBar();
+        }
+
+      switch (type) {
+        case "loveLabel":
+          result = "love";
+          break;
+        case "dislikeLabel":
+          result = "dislike";
+          break;
+      }
+
+      userChoices[number] = result;
+    }
+  });
+});
+
+
 function updateContent(index) {
   // Modified the updateContent function to display all questions
   const questionElement1 = document.getElementById('questions1');
@@ -280,37 +318,6 @@ function updateButtonColors() {
     document.getElementById('group2').classList.add('btn-secondary');
   }
 }
-
-
-document.getElementById('group1').addEventListener('click', function() {
-  if (!group1Clicked && progressValue < 100) {
-    progressValue += 2;
-    if (progressValue > 100) {
-      progressValue = 100;
-    }
-    updateProgressBar();
-
-    group1Clicked = true;
-    userChoices.push('like');
-
-    localStorage.setItem('progress', progressValue);
-  }
-});
-
-document.getElementById('group2').addEventListener('click', function() {
-  if (!group2Clicked && progressValue < 100) {
-    progressValue += 2;
-    if (progressValue > 100) {
-      progressValue = 100;
-    }
-    updateProgressBar();
-
-    group2Clicked = true;
-    userChoices.push('love');
-
-    localStorage.setItem('progress', progressValue);
-  }
-});
 
 document.getElementById('nextButton').addEventListener('click', function() {
   if (currentContentIndex < columnContent.length - 1) {
